@@ -4,6 +4,7 @@ import com.edoe.api.dto.UserDTO;
 import com.edoe.api.enums.Role;
 import com.edoe.api.exceptions.BadRequestException;
 import com.edoe.api.exceptions.EmailNotFoundException;
+import com.edoe.api.exceptions.ForbiddenException;
 import com.edoe.api.models.User;
 import com.edoe.api.repositories.UserRepository;
 
@@ -48,14 +49,13 @@ public class UserService {
 
     public UserDTO findUserByEmail(String email, String header) throws ServletException {
         Optional<User> user = userRepository.findById(email);
-        if(havePermission(header, email)){
+        if(isAdmin(header) && havePermission(header, email)){
             return user.get().toDTO();
         }
         if(!user.isPresent()) {
             throw new EmailNotFoundException("Email not found","Make sure the email is correct.");
         }
-        return user.get().toDTO();
-
+        return null;
     }
 
     private boolean emailExists(String email) {
@@ -96,5 +96,14 @@ public class UserService {
         String subject = jwtService.getSubjectToken(token);
         Optional<User> optUser = userRepository.findById(subject);
         return optUser.isPresent() && optUser.get().getEmail().equals(email);
+    }
+
+    private boolean isAdmin(String token) throws ServletException {
+        String subject = jwtService.getSubjectToken(token);
+        Optional<User> opt = userRepository.findById(subject);
+        if(!opt.get().getRole().equals(Role.ADMIN)) {
+            throw new ForbiddenException();
+        }
+        return opt.get().getRole().equals(Role.ADMIN);
     }
 }

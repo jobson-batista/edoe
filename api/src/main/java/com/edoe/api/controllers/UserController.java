@@ -31,7 +31,7 @@ public class UserController {
         } catch (IllegalArgumentException iae) {
             return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
         } catch (ServletException | ForbiddenException e) {
-            throw new ForbiddenException("Not authorized.","User does not have access to this feature.");
+            throw new ForbiddenException();
         }
     }
 }
