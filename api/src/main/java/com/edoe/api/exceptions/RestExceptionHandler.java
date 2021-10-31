@@ -35,7 +35,19 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 HttpStatus.BAD_REQUEST.value(),
                 new Date(),
                 exception.getMessage(),
-                request.getDescription(false));
+                exception.getDescription());
         return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(EmailNotFoundException.class)
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    public ResponseEntity<ErrorMessage> emailNotFoundException(EmailNotFoundException exception, WebRequest request) {
+        exception.printStackTrace();
+        ErrorMessage message = new ErrorMessage(
+                HttpStatus.NOT_FOUND.value(),
+                new Date(),
+                exception.getMessage(),
+                exception.getDescription());
+        return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
     }
 }

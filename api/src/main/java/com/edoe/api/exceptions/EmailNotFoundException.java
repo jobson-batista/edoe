@@ -4,16 +4,16 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.BAD_REQUEST)
+@ResponseStatus(HttpStatus.NOT_FOUND)
 @Getter
-public class BadRequestException extends RuntimeException {
+public class EmailNotFoundException extends RuntimeException {
 
     private String message;
     private String description;
 
-    public BadRequestException(String message, String description) {
+    public EmailNotFoundException(String message, String description) {
         super(message);
-        this.description = description;
         this.message = message;
+        this.description = description;
     }
 }
