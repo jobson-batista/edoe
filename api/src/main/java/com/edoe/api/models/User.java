@@ -15,14 +15,11 @@ import javax.persistence.*;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @Column(unique = true, nullable = false)
+    private String email;
 
     @Column(nullable = false)
     private String name;
-
-    @Column(unique = true, nullable = false)
-    private String email;
 
     private String phone;
 
@@ -34,13 +31,4 @@ public class User {
 
     @Column(nullable = false, unique = true, length = 14, name = "document")
     private String identificationDocument;
-
-    public User(String name, String email, String phone, Role role, String password, String identificationDocument) {
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
-        this.role = role;
-        this.password = password;
-        this.identificationDocument = identificationDocument;
-    }
 }
