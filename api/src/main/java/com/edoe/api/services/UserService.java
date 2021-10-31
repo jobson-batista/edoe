@@ -9,6 +9,7 @@ import com.edoe.api.models.User;
 import com.edoe.api.repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletException;
@@ -49,13 +50,26 @@ public class UserService {
 
     public UserDTO findUserByEmail(String email, String header) throws ServletException {
         Optional<User> user = userRepository.findById(email);
-        if(isAdmin(header) && havePermission(header, email)){
-            return user.get().toDTO();
+        if(!(isAdmin(header) || havePermission(header, email))){
+            throw new ForbiddenException();
         }
         if(!user.isPresent()) {
-            throw new EmailNotFoundException("Email not found","Make sure the email is correct.");
+            throw new EmailNotFoundException();
         }
-        return null;
+        return user.get().toDTO();
+    }
+
+    public UserDTO changeRole(String email, String token, Role role) throws ServletException {
+        if(!isAdmin(token)) {
+            throw new ForbiddenException();
+        }
+        if(!emailExists(email)) {
+            throw new EmailNotFoundException();
+        }
+        Optional<User> user = userRepository.findById(email);
+        user.get().setRole(role);
+        userRepository.save(user.get());
+        return user.get().toDTO();
     }
 
     private boolean emailExists(String email) {
@@ -77,19 +91,18 @@ public class UserService {
     }
 
     private boolean anyNullOrEmptyFields(User u) {
-        return (u.getName() == null
+        return u.getName() == null
                 || u.getIdentificationDocument() == null
                 || u.getPassword() == null
                 || u.getEmail() == null
                 || u.getEmail().isBlank()
                 || u.getName().isBlank()
                 || u.getIdentificationDocument().isBlank()
-                || u.getPassword().isBlank()
-        ) ? true : false;
+                || u.getPassword().isBlank();
     }
 
     private boolean isEmailDcx(String email) {
-        return email.contains("@dcx.ufpb.br") ? true : false;
+        return email.contains("@dcx.ufpb.br");
     }
 
     private boolean havePermission(String token, String email) throws ServletException{

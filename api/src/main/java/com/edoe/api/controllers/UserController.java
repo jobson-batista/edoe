@@ -34,4 +34,9 @@ public class UserController {
             throw new ForbiddenException();
         }
     }
+
+    @PatchMapping("/{email}")
+    public ResponseEntity<UserDTO> changeRole(@PathVariable String email, @RequestBody User user, @RequestHeader("Authorization") String header) throws ServletException {
+        return new ResponseEntity<UserDTO>(userService.changeRole(email, header, user.getRole()), HttpStatus.OK);
+    }
 }
