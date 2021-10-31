@@ -1,5 +1,6 @@
 package com.edoe.api.services;
 
+import com.edoe.api.dto.UserDTO;
 import com.edoe.api.enums.Role;
 import com.edoe.api.exceptions.BadRequestException;
 import com.edoe.api.exceptions.EmailNotFoundException;
@@ -9,6 +10,7 @@ import com.edoe.api.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
+import javax.servlet.ServletException;
 import java.util.Optional;
 
 @Service
@@ -17,9 +19,12 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private JWTService jwtService;
+
     @PostConstruct
     private void init() {
-        User admin = new User("Admin","admin@dcx.ufpb.br","83652134850",Role.ADMIN,"admin","7445992130");
+        User admin = new User("admin@dcx.ufpb.br","Admin","83652134850",Role.ADMIN,"admin","7445992130");
         userRepository.save(admin);
     }
 
@@ -41,12 +46,16 @@ public class UserService {
         return userRepository.save(newUser);
     }
 
-    public User findUserByEmail(String email) {
+    public UserDTO findUserByEmail(String email, String header) throws ServletException {
         Optional<User> user = userRepository.findById(email);
+        if(havePermission(header, email)){
+            return user.get().toDTO();
+        }
         if(!user.isPresent()) {
             throw new EmailNotFoundException("Email not found","Make sure the email is correct.");
         }
-        return user.get();
+        return user.get().toDTO();
+
     }
 
     private boolean emailExists(String email) {
@@ -83,4 +92,9 @@ public class UserService {
         return email.contains("@dcx.ufpb.br") ? true : false;
     }
 
+    private boolean havePermission(String token, String email) throws ServletException{
+        String subject = jwtService.getSubjectToken(token);
+        Optional<User> optUser = userRepository.findById(subject);
+        return optUser.isPresent() && optUser.get().getEmail().equals(email);
+    }
 }
