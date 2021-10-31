@@ -35,4 +35,12 @@ public class User {
     @Column(nullable = false, unique = true, length = 14, name = "document")
     private String identificationDocument;
 
+    public User(String name, String email, String phone, Role role, String password, String identificationDocument) {
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.role = role;
+        this.password = password;
+        this.identificationDocument = identificationDocument;
+    }
 }
