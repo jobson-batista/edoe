@@ -20,7 +20,7 @@
 
  - [ ] CRUD de usuário
  - [ ] Definir papéis de usuários
- - [ ] Alterar papéis de usuários
+ - [x] Alterar papéis de usuários
  - [ ] CRUD de itens
  
 <h3 id="status">✅ Status do Projeto</h3>
