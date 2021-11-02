@@ -19,7 +19,7 @@
 <h3 id="features">✅ Features</h3>
 
  - [ ] CRUD de usuário
- - [ ] Definir papéis de usuários
+ - [x] Definir papéis de usuários
  - [ ] Alterar papéis de usuários
  - [ ] CRUD de itens
  
