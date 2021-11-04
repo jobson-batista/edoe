@@ -1,5 +1,6 @@
 package com.edoe.api.exceptions;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -15,15 +16,19 @@ import java.util.Date;
 @RestControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
+    @Value("${app.url.base.dev}")
+    private String urlBaseLocal;
+
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<ErrorMessage> globalException(Exception exception, WebRequest request) {
         exception.printStackTrace();
         ErrorMessage message = new ErrorMessage(
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                new Date(),
-                exception.getMessage(),
-                request.getDescription(false));
+                request.getDescription(false),
+                "Internal server error",
+                exception.getMessage()
+                );
         return new ResponseEntity<>(message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -33,7 +38,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         exception.printStackTrace();
         ErrorMessage message = new ErrorMessage(
                 HttpStatus.BAD_REQUEST.value(),
-                new Date(),
+                this.urlBaseLocal,
                 exception.getMessage(),
                 exception.getDescription());
         return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
@@ -45,7 +50,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         exception.printStackTrace();
         ErrorMessage message = new ErrorMessage(
                 HttpStatus.NOT_FOUND.value(),
-                new Date(),
+                this.urlBaseLocal,
                 exception.getMessage(),
                 exception.getDescription());
         return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
@@ -57,7 +62,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         exception.printStackTrace();
         ErrorMessage message = new ErrorMessage(
                 HttpStatus.OK.value(),
-                new Date(),
+                this.urlBaseLocal,
                 exception.getMessage(),
                 exception.getDescription());
         return new ResponseEntity<>(message, HttpStatus.OK);
@@ -69,7 +74,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         exception.printStackTrace();
         ErrorMessage message = new ErrorMessage(
                 HttpStatus.FORBIDDEN.value(),
-                new Date(),
+                this.urlBaseLocal,
                 exception.getMessage(),
                 exception.getDescription());
         return new ResponseEntity<>(message, HttpStatus.FORBIDDEN);
