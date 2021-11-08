@@ -18,9 +18,10 @@
 
 <h3 id="features">✅ Features</h3>
 
- - [ ] CRUD de usuário
+ - [x] Cadastro de usuário
  - [x] Definir papéis de usuários
- - [ ] Alterar papéis de usuários
+ - [x] Alterar papéis de usuários
+ - [x] Login de usuário
  - [ ] CRUD de itens
  
 <h3 id="status">✅ Status do Projeto</h3>

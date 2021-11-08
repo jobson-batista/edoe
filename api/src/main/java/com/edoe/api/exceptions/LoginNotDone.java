@@ -10,6 +10,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @AllArgsConstructor
 public class LoginNotDone extends RuntimeException{
 
-    private String message;
-    private String description;
+    private String message = "Login not done";
+    private String description = "Login not done, check username or password.";
 }

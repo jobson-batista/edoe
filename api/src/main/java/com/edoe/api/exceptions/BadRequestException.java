@@ -10,6 +10,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @AllArgsConstructor
 public class BadRequestException extends RuntimeException {
 
-    private String message;
-    private String description;
+    private String message = "Bad Request";
+    private String description = "Request error, check request body or uri.";
 }
