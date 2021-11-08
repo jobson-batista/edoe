@@ -10,7 +10,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.util.Date;
 
 /*   Para dizer ao spring que essa é uma classe especializada em tratar erros.
- *   @RestControllerAdvice é a combinação de ambos @ControllerAdvicee @ResponseBody
+ *   @RestControllerAdvice é a combinação de @ControllerAdvice e @ResponseBody
  */
 @RestControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
@@ -49,5 +49,29 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 exception.getMessage(),
                 exception.getDescription());
         return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(LoginNotDone.class)
+    @ResponseStatus(value = HttpStatus.OK)
+    public ResponseEntity<ErrorMessage> loginNotDoneException(LoginNotDone exception, WebRequest request) {
+        exception.printStackTrace();
+        ErrorMessage message = new ErrorMessage(
+                HttpStatus.OK.value(),
+                new Date(),
+                exception.getMessage(),
+                exception.getDescription());
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
+    @ExceptionHandler(ForbiddenException.class)
+    @ResponseStatus(value = HttpStatus.FORBIDDEN)
+    public ResponseEntity<ErrorMessage> forbiddenException(ForbiddenException exception, WebRequest request) {
+        exception.printStackTrace();
+        ErrorMessage message = new ErrorMessage(
+                HttpStatus.FORBIDDEN.value(),
+                new Date(),
+                exception.getMessage(),
+                exception.getDescription());
+        return new ResponseEntity<>(message, HttpStatus.FORBIDDEN);
     }
 }

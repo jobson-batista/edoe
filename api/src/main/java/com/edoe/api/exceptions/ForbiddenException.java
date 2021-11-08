@@ -6,12 +6,12 @@ import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.NOT_FOUND)
+@ResponseStatus(HttpStatus.FORBIDDEN)
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class EmailNotFoundException extends RuntimeException {
+public class ForbiddenException extends RuntimeException{
 
-    private String message = "Email not found";
-    private String description = "Make sure the email is correct.";
+    private String message = "Not authorized.";
+    private String description = "User does not have access to this feature.";
 }

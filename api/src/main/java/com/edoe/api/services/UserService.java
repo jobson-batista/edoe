@@ -1,14 +1,18 @@
 package com.edoe.api.services;
 
+import com.edoe.api.dto.UserDTO;
 import com.edoe.api.enums.Role;
 import com.edoe.api.exceptions.BadRequestException;
 import com.edoe.api.exceptions.EmailNotFoundException;
+import com.edoe.api.exceptions.ForbiddenException;
 import com.edoe.api.models.User;
 import com.edoe.api.repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
+import javax.servlet.ServletException;
 import java.util.Optional;
 
 @Service
@@ -17,9 +21,12 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private JWTService jwtService;
+
     @PostConstruct
     private void init() {
-        User admin = new User("Admin","admin@dcx.ufpb.br","83652134850",Role.ADMIN,"admin","7445992130");
+        User admin = new User("admin@dcx.ufpb.br","Admin","83652134850",Role.ADMIN,"admin","7445992130");
         userRepository.save(admin);
     }
 
@@ -41,12 +48,28 @@ public class UserService {
         return userRepository.save(newUser);
     }
 
-    public User findUserByEmail(String email) {
+    public UserDTO findUserByEmail(String email, String header) throws ServletException {
         Optional<User> user = userRepository.findById(email);
-        if(!user.isPresent()) {
-            throw new EmailNotFoundException("Email not found","Make sure the email is correct.");
+        if(!(isAdmin(header) || havePermission(header, email))){
+            throw new ForbiddenException();
         }
-        return user.get();
+        if(!user.isPresent()) {
+            throw new EmailNotFoundException();
+        }
+        return user.get().toDTO();
+    }
+
+    public UserDTO changeRole(String email, String token, Role role) throws ServletException {
+        if(!isAdmin(token)) {
+            throw new ForbiddenException();
+        }
+        if(!emailExists(email)) {
+            throw new EmailNotFoundException();
+        }
+        Optional<User> user = userRepository.findById(email);
+        user.get().setRole(role);
+        userRepository.save(user.get());
+        return user.get().toDTO();
     }
 
     private boolean emailExists(String email) {
@@ -68,19 +91,32 @@ public class UserService {
     }
 
     private boolean anyNullOrEmptyFields(User u) {
-        return (u.getName() == null
+        return u.getName() == null
                 || u.getIdentificationDocument() == null
                 || u.getPassword() == null
                 || u.getEmail() == null
                 || u.getEmail().isBlank()
                 || u.getName().isBlank()
                 || u.getIdentificationDocument().isBlank()
-                || u.getPassword().isBlank()
-        ) ? true : false;
+                || u.getPassword().isBlank();
     }
 
     private boolean isEmailDcx(String email) {
-        return email.contains("@dcx.ufpb.br") ? true : false;
+        return email.contains("@dcx.ufpb.br");
     }
 
+    private boolean havePermission(String token, String email) throws ServletException{
+        String subject = jwtService.getSubjectToken(token);
+        Optional<User> optUser = userRepository.findById(subject);
+        return optUser.isPresent() && optUser.get().getEmail().equals(email);
+    }
+
+    private boolean isAdmin(String token) throws ServletException {
+        String subject = jwtService.getSubjectToken(token);
+        Optional<User> opt = userRepository.findById(subject);
+        if(!opt.get().getRole().equals(Role.ADMIN)) {
+            throw new ForbiddenException();
+        }
+        return opt.get().getRole().equals(Role.ADMIN);
+    }
 }

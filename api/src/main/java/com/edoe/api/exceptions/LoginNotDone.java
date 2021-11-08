@@ -5,10 +5,10 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.BAD_REQUEST)
+@ResponseStatus(HttpStatus.OK)
 @Getter
 @AllArgsConstructor
-public class BadRequestException extends RuntimeException {
+public class LoginNotDone extends RuntimeException{
 
     private String message;
     private String description;
