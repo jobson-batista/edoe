@@ -79,4 +79,16 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 exception.getDescription());
         return new ResponseEntity<>(message, HttpStatus.FORBIDDEN);
     }
+
+    @ExceptionHandler(DescriptorAlreadyRegisteredException.class)
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorMessage> forbiddenException(DescriptorAlreadyRegisteredException exception, WebRequest request) {
+        exception.printStackTrace();
+        ErrorMessage message = new ErrorMessage(
+                HttpStatus.BAD_REQUEST.value(),
+                this.urlBaseLocal,
+                exception.getMessage(),
+                exception.getDescription());
+        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+    }
 }

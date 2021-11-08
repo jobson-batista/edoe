@@ -101,22 +101,25 @@ public class UserService {
                 || u.getPassword().isBlank();
     }
 
-    private boolean isEmailDcx(String email) {
+    public boolean isEmailDcx(String email) {
         return email.contains("@dcx.ufpb.br");
     }
 
-    private boolean havePermission(String token, String email) throws ServletException{
+    public boolean havePermission(String token, String email) throws ServletException{
         String subject = jwtService.getSubjectToken(token);
         Optional<User> optUser = userRepository.findById(subject);
         return optUser.isPresent() && optUser.get().getEmail().equals(email);
     }
 
-    private boolean isAdmin(String token) throws ServletException {
+    public boolean isAdmin(String token) throws ServletException {
         String subject = jwtService.getSubjectToken(token);
         Optional<User> opt = userRepository.findById(subject);
-        if(!opt.get().getRole().equals(Role.ADMIN)) {
-            throw new ForbiddenException();
-        }
         return opt.get().getRole().equals(Role.ADMIN);
+    }
+
+    public boolean isDonor(String token) throws ServletException {
+        String subject = jwtService.getSubjectToken(token);
+        Optional<User> opt = userRepository.findById(subject);
+        return opt.get().getRole().equals(Role.APENAS_DOADOR) || opt.get().getRole().equals(Role.DOADOR_RECEPTOR);
     }
 }
