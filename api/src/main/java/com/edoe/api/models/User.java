@@ -1,5 +1,6 @@
 package com.edoe.api.models;
 
+import com.edoe.api.dto.UserDTO;
 import com.edoe.api.enums.Role;
 
 import lombok.AllArgsConstructor;
@@ -15,14 +16,11 @@ import javax.persistence.*;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @Column(unique = true, nullable = false)
+    private String email;
 
     @Column(nullable = false)
     private String name;
-
-    @Column(unique = true, nullable = false)
-    private String email;
 
     private String phone;
 
@@ -35,4 +33,13 @@ public class User {
     @Column(nullable = false, unique = true, length = 14, name = "document")
     private String identificationDocument;
 
+    public UserDTO toDTO() {
+        UserDTO dto = new UserDTO();
+        dto.setEmail(this.email);
+        dto.setName(this.name);
+        dto.setIdentificationDocument(this.identificationDocument);
+        dto.setPhone(this.phone);
+        dto.setRole(this.role);
+        return dto;
+    }
 }
