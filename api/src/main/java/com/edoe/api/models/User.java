@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
@@ -32,6 +33,9 @@ public class User {
 
     @Column(nullable = false, unique = true, length = 14, name = "document")
     private String identificationDocument;
+
+    @OneToMany(mappedBy = "user")
+    private List<Item> items;
 
     public UserDTO toDTO() {
         UserDTO dto = new UserDTO();
