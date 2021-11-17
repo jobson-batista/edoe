@@ -37,8 +37,8 @@ public class ItemService {
 	}
 
 	private boolean itemExists(Item item) {
-		for (Item i : itemRepo.findAll()) {
-			if (item.getDescription().equals(i.getDescription()) || item.getDescriptor().getDescriptor().equals(i.getDescriptor().getDescriptor())) {
+		for(Item i : itemRepo.findAll()) {
+			if(item.getDescription().equals(i.getDescription()) || item.getDescriptor().getDescriptor().equals(i.getDescriptor().getDescriptor())) {
 				return true;
 			}
 		}
