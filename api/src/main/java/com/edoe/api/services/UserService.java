@@ -130,5 +130,12 @@ public class UserService {
             return true;
         }
         return false;
+    public User getUserByToken(String token) throws  ServletException {
+        String subject = jwtService.getSubjectToken(token);
+        Optional<User> opt = userRepository.findById(subject);
+        if(!opt.isPresent()){
+            throw new BadRequestException("Invalid email","User not found");
+        }
+        return opt.get();
     }
 }

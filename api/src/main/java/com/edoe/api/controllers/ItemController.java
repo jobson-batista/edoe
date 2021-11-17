@@ -1,5 +1,6 @@
 package com.edoe.api.controllers;
 
+import com.edoe.api.dto.ItemDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +18,8 @@ public class ItemController {
 	private ItemService itemServ;
 	
 	@PostMapping
-	public ResponseEntity<Item> createItem (@RequestBody Item item, @RequestHeader("Authorization") String token){
-		return new ResponseEntity <>(itemServ.createItem(item, token), HttpStatus.OK);
+	public ResponseEntity<ItemDTO> createItem (@RequestBody Item item, @RequestHeader("Authorization") String token) throws ServletException {
+		return new ResponseEntity <>(itemServ.createItem(item, token).toDTO(), HttpStatus.OK);
 	}
 
 	@PatchMapping("/{id}")

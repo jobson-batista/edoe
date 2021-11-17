@@ -4,6 +4,7 @@ import com.edoe.api.enums.ItemType;
 import com.edoe.api.enums.Role;
 import com.edoe.api.exceptions.ForbiddenException;
 import com.edoe.api.exceptions.NotFoundException;
+import com.edoe.api.exceptions.BadRequestException;
 import com.edoe.api.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import javax.annotation.PostConstruct;
 import javax.servlet.ServletException;
 import java.util.List;
 import java.util.Optional;
+import javax.servlet.ServletException;
 
 @Service
 public class ItemService {
@@ -36,8 +38,23 @@ public class ItemService {
 	}
 
 	public Item createItem(Item item, String token) {
+	private UserService user;
+	
+	
+	public Item createItem(Item item, String token) throws ServletException {
+
+		if(!user.isDonor(token) && !user.isAdmin(token)){
+			throw new ForbiddenException();
+		}
+
+		if(itemExists(item)) {
+			throw new BadRequestException("Item already registered", "Repeated items are not allowed.");
+		}
+
+		User u = user.getUserByToken(token);
+		item.setUser(u);
+
 		return itemRepo.save(item);
-		
 	}
 
 	public Item updateItem(Item item, String token) throws ServletException {
@@ -59,5 +76,13 @@ public class ItemService {
 		return itemRepo.findAll();
 	}
 	
+	private boolean itemExists(Item item) {
+		for(Item i : itemRepo.findAll()) {
+			if(item.getDescription().equals(i.getDescription()) || item.getDescriptor().getDescriptor().equals(i.getDescriptor().getDescriptor())) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
 
