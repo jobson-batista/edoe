@@ -26,7 +26,7 @@ public class UserService {
 
     @PostConstruct
     private void init() {
-        User admin = new User("admin@dcx.ufpb.br","Admin","83652134850",Role.ADMIN,"admin","7445992130");
+        User admin = new User("admin@dcx.ufpb.br","Admin","83652134850",Role.ADMIN,"admin","7445992130", null);
         userRepository.save(admin);
     }
 
@@ -121,5 +121,14 @@ public class UserService {
         String subject = jwtService.getSubjectToken(token);
         Optional<User> opt = userRepository.findById(subject);
         return opt.get().getRole().equals(Role.APENAS_DOADOR) || opt.get().getRole().equals(Role.DOADOR_RECEPTOR);
+    }
+
+    public User getUserByToken(String token) throws  ServletException {
+        String subject = jwtService.getSubjectToken(token);
+        Optional<User> opt = userRepository.findById(subject);
+        if(!opt.isPresent()){
+            throw new BadRequestException("Invalid email","User not found");
+        }
+        return opt.get();
     }
 }
