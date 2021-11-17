@@ -5,6 +5,7 @@ import com.edoe.api.enums.Role;
 import com.edoe.api.exceptions.BadRequestException;
 import com.edoe.api.exceptions.EmailNotFoundException;
 import com.edoe.api.exceptions.ForbiddenException;
+import com.edoe.api.models.Item;
 import com.edoe.api.models.User;
 import com.edoe.api.repositories.UserRepository;
 
@@ -26,7 +27,7 @@ public class UserService {
 
     @PostConstruct
     private void init() {
-        User admin = new User("admin@dcx.ufpb.br","Admin","83652134850",Role.ADMIN,"admin","7445992130");
+        User admin = new User("admin@dcx.ufpb.br","Admin","83652134850",Role.ADMIN,"admin","7445992130", null);
         userRepository.save(admin);
     }
 
@@ -121,5 +122,13 @@ public class UserService {
         String subject = jwtService.getSubjectToken(token);
         Optional<User> opt = userRepository.findById(subject);
         return opt.get().getRole().equals(Role.APENAS_DOADOR) || opt.get().getRole().equals(Role.DOADOR_RECEPTOR);
+    }
+
+    public boolean isOwnerItem(String token, Item item) throws ServletException{
+        String subject = jwtService.getSubjectToken(token);
+        if(subject.equals(item.getUser().getEmail())){
+            return true;
+        }
+        return false;
     }
 }
