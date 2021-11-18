@@ -16,6 +16,4 @@ public class ItemDTO {
     private String description;
 
     private Descriptor descriptor;
-
-    private UserDTO user;
 }

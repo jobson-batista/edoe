@@ -37,4 +37,9 @@ public class ItemController {
 	public ResponseEntity<List<ItemDTO>> getAllItemsDoacao() {
 		return new ResponseEntity<>(itemServ.getAllItemsDTO(), HttpStatus.OK);
 	}
+
+	@GetMapping("/donations/descriptor")
+	public ResponseEntity<List<ItemDTO>> getItemByDescriptor(@RequestParam Long id) {
+		return new ResponseEntity<>(itemServ.getItemsByDescriptor(id), HttpStatus.OK);
+	}
 }
