@@ -123,7 +123,7 @@ public class ItemService {
 	public List<ItemDTO> searchItems(ItemType type, String term){
 		List<ItemDTO> items = new ArrayList<>();
 		for(Item i: itemRepo.findAll()){
-			if(i.getDescriptor().getDescriptor().toLowerCase().contains(term.toLowerCase())){
+			if(i.getType().equals(type) && i.getDescriptor().getDescriptor().toLowerCase().contains(term.toLowerCase())){
 				items.add(i.toDTO());
 			}
 		}

@@ -84,4 +84,9 @@ public class ItemController {
 	public ResponseEntity<List<ItemDTO>> matchesItems(@RequestParam Long id, @RequestHeader("Authorization") String token) throws ServletException {
 		return new ResponseEntity<>(itemServ.itemsMatches(id, token), HttpStatus.OK);
 	}
+
+	@GetMapping("/required")
+	public ResponseEntity<List<ItemDTO>> searchItemRequired(@RequestParam String search) {
+		return new ResponseEntity<>(itemServ.searchItems(ItemType.NECESSARIO, search), HttpStatus.OK);
+	}
 }
