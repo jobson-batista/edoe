@@ -114,5 +114,15 @@ public class ItemService {
 		}
 		return items;
 	}
+
+	public List<ItemDTO> searchItems(ItemType type, String term){
+		List<ItemDTO> items = new ArrayList<>();
+		for(Item i: itemRepo.findAll()){
+			if(i.getDescriptor().getDescriptor().toLowerCase().contains(term.toLowerCase())){
+				items.add(i.toDTO());
+			}
+		}
+		return items;
+	}
 }
 
