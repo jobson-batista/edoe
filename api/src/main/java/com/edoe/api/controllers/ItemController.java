@@ -79,4 +79,9 @@ public class ItemController {
 	public ResponseEntity<List<ItemDTO>> getItemsTopTenRequired() {
 		return new ResponseEntity<>(itemServ.topTenDonation(ItemType.NECESSARIO), HttpStatus.OK);
 	}
+
+	@GetMapping("/required")
+	public ResponseEntity<List<ItemDTO>> searchItemRequired(@RequestParam String search) {
+		return new ResponseEntity<>(itemServ.searchItems(ItemType.NECESSARIO, search), HttpStatus.OK);
+	}
 }
