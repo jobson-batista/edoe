@@ -2,6 +2,7 @@ package com.edoe.api.services;
 
 import com.edoe.api.exceptions.DescriptorAlreadyRegisteredException;
 import com.edoe.api.exceptions.ForbiddenException;
+import com.edoe.api.exceptions.NotFoundException;
 import com.edoe.api.models.Descriptor;
 import com.edoe.api.repositories.DescriptorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +35,10 @@ public class DescriptorService {
 
     public List<Descriptor> getAllDescriptors() {
         return descriptorRepository.findAll();
+    }
+
+    public Descriptor findDescriptorById(Long id) {
+        if(!descriptorRepository.existsById(id)) throw new NotFoundException();
+        return descriptorRepository.findById(id).get();
     }
 }

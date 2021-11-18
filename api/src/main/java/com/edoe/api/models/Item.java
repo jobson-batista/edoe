@@ -38,7 +38,6 @@ public class Item {
 		item.setQuantity(this.quantity);
 		item.setDescription(this.description);
 		item.setDescriptor(this.descriptor);
-		item.setUser(this.user.toDTO());
 		return item;
 	}
 }

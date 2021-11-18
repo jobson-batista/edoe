@@ -7,6 +7,7 @@ import com.edoe.api.exceptions.NotFoundException;
 import com.edoe.api.exceptions.BadRequestException;
 import com.edoe.api.models.Descriptor;
 import com.edoe.api.models.User;
+import javassist.runtime.Desc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -98,6 +99,18 @@ public class ItemService {
 			if(item.getDescription().equals(i.getDescription())) return true;
 		}
 		return false;
+	}
+
+	public List<ItemDTO> getItemsByDescriptor(Long id) {
+		if(id == null) throw new NotFoundException();
+		Descriptor d = descriptorService.findDescriptorById(id);
+		List<ItemDTO> items = new ArrayList<>();
+		for(Item i: itemRepo.findAll()) {
+			if (i.getType().equals(ItemType.DOACAO) && i.getDescriptor().getDescriptor().equals(d.getDescriptor())) {
+				items.add(i.toDTO());
+			}
+		}
+		return items;
 	}
 
 	public List<ItemDTO> topTenDonation() {

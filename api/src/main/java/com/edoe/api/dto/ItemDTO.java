@@ -17,8 +17,6 @@ public class ItemDTO implements Comparable<ItemDTO> {
 
     private Descriptor descriptor;
 
-    private UserDTO user;
-
     @Override
     public int compareTo(ItemDTO i) {
         if(this.quantity > i.getQuantity()) {
