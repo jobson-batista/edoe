@@ -40,6 +40,6 @@ public class ItemController {
 
 	@GetMapping("/donations/top10")
 	public ResponseEntity<List<ItemDTO>> getItemsTopTen() {
-		return new ResponseEntity<>(itemServ.topTen(), HttpStatus.OK);
+		return new ResponseEntity<>(itemServ.topTenDonation(), HttpStatus.OK);
 	}
 }
