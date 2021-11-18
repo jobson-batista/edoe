@@ -6,12 +6,12 @@ import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.OK)
+@ResponseStatus(HttpStatus.NOT_FOUND)
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginNotDone extends RuntimeException{
+public class NotFoundException extends RuntimeException {
 
-    private String message = "Login not done";
-    private String description = "Login not done, check username or password.";
+    private String message = "Not Found";
+    private String description = "Check the ID entered.";
 }

@@ -5,18 +5,17 @@ import javax.persistence.*;
 import com.edoe.api.dto.ItemDTO;
 import com.edoe.api.enums.ItemType;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class Item {
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	private ItemType type;
@@ -25,11 +24,10 @@ public class Item {
 	
 	private String description;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	
+	@OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	private Descriptor descriptor;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "user_id")
 	private User user;
 
@@ -40,6 +38,7 @@ public class Item {
 		item.setQuantity(this.quantity);
 		item.setDescription(this.description);
 		item.setDescriptor(this.descriptor);
+		item.setUser(this.user.toDTO());
 		return item;
 	}
 }

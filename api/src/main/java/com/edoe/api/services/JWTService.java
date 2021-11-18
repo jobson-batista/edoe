@@ -32,7 +32,7 @@ public class JWTService {
     private String generateToken(String email) {
         return Jwts.builder().setSubject(email)
                 .signWith(SignatureAlgorithm.HS512, TOKEN_KEY)
-                .setExpiration(new Date((long) (System.currentTimeMillis() + 10 * 60 * 1000))).compact();
+                .setExpiration(new Date((long) (System.currentTimeMillis() + 30 * 60 * 1000))).compact();
     }
 
     public String getSubjectToken(String authorizationHeader) throws ServletException {

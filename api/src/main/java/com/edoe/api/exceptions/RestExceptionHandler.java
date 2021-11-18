@@ -91,4 +91,16 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 exception.getDescription());
         return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(NotFoundException.class)
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    public ResponseEntity<ErrorMessage> notFoundException(NotFoundException exception, WebRequest request) {
+        exception.printStackTrace();
+        ErrorMessage message = new ErrorMessage(
+                HttpStatus.NOT_FOUND.value(),
+                this.urlBaseLocal,
+                exception.getMessage(),
+                exception.getDescription());
+        return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+    }
 }
