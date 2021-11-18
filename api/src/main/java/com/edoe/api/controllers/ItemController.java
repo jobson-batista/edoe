@@ -1,6 +1,7 @@
 package com.edoe.api.controllers;
 
 import com.edoe.api.dto.ItemDTO;
+import com.edoe.api.enums.ItemType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +34,7 @@ public class ItemController {
 		return new ResponseEntity(HttpStatus.OK);
 	}
 
-	@GetMapping("/donations")
+	@GetMapping
 	public ResponseEntity<List<ItemDTO>> getAllItemsDoacao() {
 		return new ResponseEntity<>(itemServ.getAllItemsDTO(), HttpStatus.OK);
 	}
@@ -41,6 +42,11 @@ public class ItemController {
 	@GetMapping("/donations/descriptor")
 	public ResponseEntity<List<ItemDTO>> getItemByDescriptor(@RequestParam Long id) {
 		return new ResponseEntity<>(itemServ.getItemsByDescriptor(id), HttpStatus.OK);
+	}
+
+	@GetMapping("/donations")
+	public ResponseEntity<List<ItemDTO>> searchItem(@RequestParam String search) {
+		return new ResponseEntity<>(itemServ.searchItems(ItemType.DOACAO, search), HttpStatus.OK);
 	}
 	
 	@GetMapping("/donations/top10")
