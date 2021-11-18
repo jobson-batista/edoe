@@ -109,12 +109,12 @@ public class ItemService {
 		return false;
 	}
 
-	public List<ItemDTO> getItemsByDescriptor(Long id) {
+	public List<ItemDTO> getItemsByDescriptor(ItemType type, Long id) {
 		if(id == null) throw new NotFoundException();
 		Descriptor d = descriptorService.findDescriptorById(id);
 		List<ItemDTO> items = new ArrayList<>();
 		for(Item i: itemRepo.findAll()) {
-			if (i.getType().equals(ItemType.DOACAO) && i.getDescriptor().getDescriptor().equals(d.getDescriptor())) {
+			if (i.getType().equals(type) && i.getDescriptor().getDescriptor().equals(d.getDescriptor())) {
 				items.add(i.toDTO());
 			}
 		}

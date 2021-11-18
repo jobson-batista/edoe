@@ -41,7 +41,7 @@ public class ItemController {
 
 	@GetMapping("/donations/descriptor")
 	public ResponseEntity<List<ItemDTO>> getItemByDescriptor(@RequestParam Long id) {
-		return new ResponseEntity<>(itemServ.getItemsByDescriptor(id), HttpStatus.OK);
+		return new ResponseEntity<>(itemServ.getItemsByDescriptor(ItemType.DOACAO, id), HttpStatus.OK);
 	}
 
 	@GetMapping("/donations")
@@ -68,5 +68,10 @@ public class ItemController {
 	public ResponseEntity removeItemRequired(@PathVariable Long id, @RequestHeader("Authorization") String token) throws ServletException {
 		itemServ.removeItem(ItemType.NECESSARIO, id, token);
 		return new ResponseEntity(HttpStatus.OK);
+	}
+
+	@GetMapping("/required/descriptor")
+	public ResponseEntity<List<ItemDTO>> getItemRequiredByDescriptor(@RequestParam Long id) {
+		return new ResponseEntity<>(itemServ.getItemsByDescriptor(ItemType.NECESSARIO, id), HttpStatus.OK);
 	}
 }
