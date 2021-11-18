@@ -1,6 +1,7 @@
 package com.edoe.api.services;
 
 import com.edoe.api.dto.ItemDTO;
+import com.edoe.api.enums.ItemType;
 import com.edoe.api.exceptions.ForbiddenException;
 import com.edoe.api.exceptions.NotFoundException;
 import com.edoe.api.exceptions.BadRequestException;
@@ -13,9 +14,7 @@ import com.edoe.api.models.Item;
 import com.edoe.api.repositories.ItemRepository;
 
 import javax.servlet.ServletException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ItemService {
@@ -99,6 +98,18 @@ public class ItemService {
 			if(item.getDescription().equals(i.getDescription())) return true;
 		}
 		return false;
+	}
+
+	public List<ItemDTO> topTenDonation() {
+		List<ItemDTO> items = new ArrayList<>();
+		for(Item i: itemRepo.findAll()){
+			if(i.getType().equals(ItemType.DOACAO)) items.add(i.toDTO());
+		}
+		Collections.sort(items);
+		if(items.size() > 10) {
+			items = items.subList(0,10);
+		}
+		return items;
 	}
 }
 

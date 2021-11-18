@@ -37,4 +37,9 @@ public class ItemController {
 	public ResponseEntity<List<ItemDTO>> getAllItemsDoacao() {
 		return new ResponseEntity<>(itemServ.getAllItemsDTO(), HttpStatus.OK);
 	}
+
+	@GetMapping("/donations/top10")
+	public ResponseEntity<List<ItemDTO>> getItemsTopTen() {
+		return new ResponseEntity<>(itemServ.topTenDonation(), HttpStatus.OK);
+	}
 }
