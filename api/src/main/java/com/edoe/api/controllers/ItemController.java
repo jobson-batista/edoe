@@ -1,6 +1,7 @@
 package com.edoe.api.controllers;
 
 import com.edoe.api.dto.ItemDTO;
+import com.edoe.api.enums.ItemType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +19,8 @@ public class ItemController {
 	private ItemService itemServ;
 	
 	@PostMapping("/donations")
-	public ResponseEntity<ItemDTO> createItem (@RequestBody Item item, @RequestHeader("Authorization") String token) throws ServletException {
-		return new ResponseEntity <>(itemServ.createItem(item, token).toDTO(), HttpStatus.OK);
+	public ResponseEntity<ItemDTO> createItemDonation(@RequestBody Item item, @RequestHeader("Authorization") String token) throws ServletException {
+		return new ResponseEntity <>(itemServ.createItem(ItemType.DOACAO, item, token).toDTO(), HttpStatus.OK);
 	}
 
 	@PatchMapping("/donations/{id}")
@@ -41,5 +42,10 @@ public class ItemController {
 	@GetMapping("/donations/top10")
 	public ResponseEntity<List<ItemDTO>> getItemsTopTen() {
 		return new ResponseEntity<>(itemServ.topTenDonation(), HttpStatus.OK);
+	}
+
+	@PostMapping("/required")
+	public ResponseEntity<ItemDTO> createItemRequired(@RequestBody Item item, @RequestHeader("Authorization") String token) throws ServletException {
+		return new ResponseEntity <>(itemServ.createItem(ItemType.NECESSARIO, item, token).toDTO(), HttpStatus.OK);
 	}
 }

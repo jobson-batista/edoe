@@ -2,6 +2,7 @@ package com.edoe.api.services;
 
 import com.edoe.api.dto.ItemDTO;
 import com.edoe.api.enums.ItemType;
+import com.edoe.api.enums.Role;
 import com.edoe.api.exceptions.ForbiddenException;
 import com.edoe.api.exceptions.NotFoundException;
 import com.edoe.api.exceptions.BadRequestException;
@@ -27,14 +28,14 @@ public class ItemService {
 	@Autowired
 	private DescriptorService descriptorService;
 
-	public Item createItem(Item item, String token) throws ServletException {
-
-		if(!userSerivce.isDonor(token) && !userSerivce.isAdmin(token)){
-			throw new ForbiddenException();
-		}
+	public Item createItem(ItemType type, Item item, String token) throws ServletException {
 
 		if(itemExists(item)) {
 			throw new BadRequestException("Item already registered", "Repeated items are not allowed.");
+		}
+
+		if(!item.getType().equals(type)) {
+			throw new BadRequestException("Item type not supported","Item type is not compatible with route, check route.");
 		}
 
 		for(Descriptor d: descriptorService.getAllDescriptors()) {
@@ -44,9 +45,13 @@ public class ItemService {
 		}
 
 		User u = userSerivce.getUserByToken(token);
-		item.setUser(u);
 
-		return itemRepo.save(item);
+		if(((u.getRole().equals(Role.APENAS_DOADOR) || u.getRole().equals(Role.DOADOR_RECEPTOR)) && type.equals(ItemType.DOACAO)) ||
+				(u.getRole().equals(Role.DOADOR_RECEPTOR) || u.getRole().equals(Role.APENAS_RECEPTOR)) && type.equals(ItemType.NECESSARIO) ) {
+			item.setUser(u);
+			return itemRepo.save(item);
+		}
+		throw new ForbiddenException();
 	}
 
 	public ItemDTO updateItem(Item item, Long id, String token) throws ServletException {
@@ -95,7 +100,7 @@ public class ItemService {
 	
 	private boolean itemExists(Item item) {
 		for(Item i : itemRepo.findAll()) {
-			if(item.getDescription().equals(i.getDescription())) return true;
+			if(item.getDescription().equals(i.getDescription()) && item.getType().equals(item.getType())) return true;
 		}
 		return false;
 	}
