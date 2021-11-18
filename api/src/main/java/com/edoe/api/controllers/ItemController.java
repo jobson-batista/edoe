@@ -17,18 +17,24 @@ public class ItemController {
 	@Autowired
 	private ItemService itemServ;
 	
-	@PostMapping
+	@PostMapping("/donations")
 	public ResponseEntity<ItemDTO> createItem (@RequestBody Item item, @RequestHeader("Authorization") String token) throws ServletException {
 		return new ResponseEntity <>(itemServ.createItem(item, token).toDTO(), HttpStatus.OK);
 	}
 
-	@PatchMapping("/{id}")
-	public ResponseEntity<Item> updateItem(@RequestBody Item item, @RequestHeader("Authorization") String token) throws ServletException {
-		return new ResponseEntity<>(itemServ.updateItem(item, token), HttpStatus.OK);
+	@PatchMapping("/donations/{id}")
+	public ResponseEntity<ItemDTO> updateItem(@RequestBody Item item, @RequestHeader("Authorization") String token, @PathVariable Long id) throws ServletException {
+		return new ResponseEntity<>(itemServ.updateItem(item, id, token), HttpStatus.OK);
 	}
 
-	@GetMapping
-	public ResponseEntity<List<Item>> getAllItemsDoacao() {
-		return new ResponseEntity<>(itemServ.getAllItems(), HttpStatus.OK);
+	@DeleteMapping("/donations/{id}")
+	public ResponseEntity removeItem(@PathVariable Long id, @RequestHeader("Authorization") String token) throws ServletException {
+		itemServ.removeItem(id, token);
+		return new ResponseEntity(HttpStatus.OK);
+	}
+
+	@GetMapping("/donations")
+	public ResponseEntity<List<ItemDTO>> getAllItemsDoacao() {
+		return new ResponseEntity<>(itemServ.getAllItemsDTO(), HttpStatus.OK);
 	}
 }

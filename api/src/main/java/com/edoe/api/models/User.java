@@ -3,25 +3,18 @@ package com.edoe.api.models;
 import com.edoe.api.dto.UserDTO;
 import com.edoe.api.enums.Role;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class User {
-
-    public User(String email, String name, Role role, String password) {
-        this.email = email;
-        this.name = name;
-        this.role = role;
-        this.password = password;
-    }
 
     @Id
     @Column(unique = true, nullable = false)
@@ -41,8 +34,15 @@ public class User {
     @Column(nullable = false, unique = true, length = 14, name = "document")
     private String identificationDocument;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<Item> items;
+
+    public User(String email, String name, Role role, String password) {
+        this.email = email;
+        this.name = name;
+        this.role = role;
+        this.password = password;
+    }
 
     public UserDTO toDTO() {
         UserDTO dto = new UserDTO();
