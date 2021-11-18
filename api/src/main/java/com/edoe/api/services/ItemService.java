@@ -13,9 +13,7 @@ import com.edoe.api.models.Item;
 import com.edoe.api.repositories.ItemRepository;
 
 import javax.servlet.ServletException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ItemService {
@@ -99,6 +97,18 @@ public class ItemService {
 			if(item.getDescription().equals(i.getDescription())) return true;
 		}
 		return false;
+	}
+
+	public List<ItemDTO> topTen() {
+		List<ItemDTO> items = new ArrayList<>();
+		for(Item i: itemRepo.findAll()){
+			items.add(i.toDTO());
+		}
+		Collections.sort(items);
+		if(items.size() > 10) {
+			items = items.subList(0,10);
+		}
+		return items;
 	}
 }
 
