@@ -151,7 +151,7 @@ public class ItemService {
 		}
 		if(!item.get().getType().equals(ItemType.NECESSARIO)) throw new BadRequestException("Item type not supported","Item type is not compatible with route, check route.");
 		for(Item i: itemRepo.findAll()) {
-			if(i.getType().equals(ItemType.NECESSARIO) && i.getDescriptor().equals(item.get().getDescriptor())) {
+			if(i.getType().equals(ItemType.DOACAO) && i.getDescriptor().equals(item.get().getDescriptor())) {
 				items.add(i.toDTO());
 			}
 		}
