@@ -131,10 +131,10 @@ public class ItemService {
 		return items;
 	}
 
-	public List<ItemDTO> topTenDonation() {
+	public List<ItemDTO> topTenDonation(ItemType type) {
 		List<ItemDTO> items = new ArrayList<>();
 		for(Item i: itemRepo.findAll()){
-			if(i.getType().equals(ItemType.DOACAO)) items.add(i.toDTO());
+			if(i.getType().equals(type)) items.add(i.toDTO());
 		}
 		Collections.sort(items);
 		if(items.size() > 10) {
