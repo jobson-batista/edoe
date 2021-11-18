@@ -42,4 +42,9 @@ public class ItemController {
 	public ResponseEntity<List<ItemDTO>> getItemByDescriptor(@RequestParam Long id) {
 		return new ResponseEntity<>(itemServ.getItemsByDescriptor(id), HttpStatus.OK);
 	}
+	
+	@GetMapping("/donations/top10")
+	public ResponseEntity<List<ItemDTO>> getItemsTopTen() {
+		return new ResponseEntity<>(itemServ.topTenDonation(), HttpStatus.OK);
+	}
 }

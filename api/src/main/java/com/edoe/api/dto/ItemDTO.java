@@ -5,7 +5,7 @@ import com.edoe.api.models.Descriptor;
 import lombok.Data;
 
 @Data
-public class ItemDTO {
+public class ItemDTO implements Comparable<ItemDTO> {
 
     private Long id;
 
@@ -16,4 +16,15 @@ public class ItemDTO {
     private String description;
 
     private Descriptor descriptor;
+
+    @Override
+    public int compareTo(ItemDTO i) {
+        if(this.quantity > i.getQuantity()) {
+            return -1;
+        }
+        if(this.quantity < i.getQuantity()) {
+            return 1;
+        }
+        return 0;
+    }
 }
