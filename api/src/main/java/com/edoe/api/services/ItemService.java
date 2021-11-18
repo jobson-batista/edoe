@@ -55,8 +55,9 @@ public class ItemService {
 		throw new ForbiddenException();
 	}
 
-	public ItemDTO updateItem(Item item, Long id, String token) throws ServletException {
+	public ItemDTO updateItem(ItemType type, Item item, Long id, String token) throws ServletException {
 		Optional<Item> itemOld = itemRepo.findById(id);
+
 		if(!itemOld.isPresent()) {
 			throw new NotFoundException();
 		}
@@ -69,11 +70,13 @@ public class ItemService {
 		if(item.getDescription() != null && itemOld.get().getDescription() != item.getDescription()) {
 			itemOld.get().setDescription(item.getDescription());
 		}
+		if(!itemOld.get().getType().equals(type)) throw new BadRequestException("Item type not supported","Item type is not compatible with route, check route.");
 		return itemRepo.save(itemOld.get()).toDTO();
 	}
 
-	public void removeItem(Long id, String token) throws ServletException {
+	public void removeItem(ItemType type, Long id, String token) throws ServletException {
 		Optional<Item> item = itemRepo.findById(id);
+		if(!item.get().getType().equals(type)) throw new BadRequestException("Item type not supported","Item type is not compatible with route, check route.");
 		if(!item.isPresent()) {
 			throw new NotFoundException();
 		}

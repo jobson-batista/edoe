@@ -24,13 +24,13 @@ public class ItemController {
 	}
 
 	@PatchMapping("/donations/{id}")
-	public ResponseEntity<ItemDTO> updateItem(@RequestBody Item item, @RequestHeader("Authorization") String token, @PathVariable Long id) throws ServletException {
-		return new ResponseEntity<>(itemServ.updateItem(item, id, token), HttpStatus.OK);
+	public ResponseEntity<ItemDTO> updateItemDonation(@RequestBody Item item, @RequestHeader("Authorization") String token, @PathVariable Long id) throws ServletException {
+		return new ResponseEntity<>(itemServ.updateItem(ItemType.DOACAO, item, id, token), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/donations/{id}")
-	public ResponseEntity removeItem(@PathVariable Long id, @RequestHeader("Authorization") String token) throws ServletException {
-		itemServ.removeItem(id, token);
+	public ResponseEntity removeItemDonation(@PathVariable Long id, @RequestHeader("Authorization") String token) throws ServletException {
+		itemServ.removeItem(ItemType.DOACAO, id, token);
 		return new ResponseEntity(HttpStatus.OK);
 	}
 
@@ -57,5 +57,16 @@ public class ItemController {
 	@PostMapping("/required")
 	public ResponseEntity<ItemDTO> createItemRequired(@RequestBody Item item, @RequestHeader("Authorization") String token) throws ServletException {
 		return new ResponseEntity <>(itemServ.createItem(ItemType.NECESSARIO, item, token).toDTO(), HttpStatus.OK);
+	}
+
+	@PatchMapping("/required/{id}")
+	public ResponseEntity<ItemDTO> updateItemRequired(@RequestBody Item item, @RequestHeader("Authorization") String token, @PathVariable Long id) throws ServletException {
+		return new ResponseEntity<>(itemServ.updateItem(ItemType.NECESSARIO, item, id, token), HttpStatus.OK);
+	}
+
+	@DeleteMapping("/required/{id}")
+	public ResponseEntity removeItemRequired(@PathVariable Long id, @RequestHeader("Authorization") String token) throws ServletException {
+		itemServ.removeItem(ItemType.NECESSARIO, id, token);
+		return new ResponseEntity(HttpStatus.OK);
 	}
 }
