@@ -79,4 +79,9 @@ public class ItemController {
 	public ResponseEntity<List<ItemDTO>> getItemsTopTenRequired() {
 		return new ResponseEntity<>(itemServ.topTenDonation(ItemType.NECESSARIO), HttpStatus.OK);
 	}
+
+	@GetMapping("/matches")
+	public ResponseEntity<List<ItemDTO>> matchesItems(@RequestParam Long id, @RequestHeader("Authorization") String token) throws ServletException {
+		return new ResponseEntity<>(itemServ.itemsMatches(id, token), HttpStatus.OK);
+	}
 }

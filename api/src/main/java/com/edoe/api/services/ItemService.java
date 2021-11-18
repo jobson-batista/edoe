@@ -8,7 +8,6 @@ import com.edoe.api.exceptions.NotFoundException;
 import com.edoe.api.exceptions.BadRequestException;
 import com.edoe.api.models.Descriptor;
 import com.edoe.api.models.User;
-import javassist.runtime.Desc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -139,6 +138,22 @@ public class ItemService {
 		Collections.sort(items);
 		if(items.size() > 10) {
 			items = items.subList(0,10);
+		}
+		return items;
+	}
+
+	public List<ItemDTO> itemsMatches(Long idItem, String token) throws ServletException {
+		List<ItemDTO> items = new ArrayList<>();
+		Optional<Item> item = itemRepo.findById(idItem);
+		if(!(userSerivce.getUserByToken(token).getRole().equals(Role.APENAS_RECEPTOR) ||
+				userSerivce.getUserByToken(token).getRole().equals(Role.APENAS_RECEPTOR))) {
+			throw new ForbiddenException();
+		}
+		if(!item.get().getType().equals(ItemType.NECESSARIO)) throw new BadRequestException("Item type not supported","Item type is not compatible with route, check route.");
+		for(Item i: itemRepo.findAll()) {
+			if(i.getType().equals(ItemType.NECESSARIO) && i.getDescriptor().equals(item.get().getDescriptor())) {
+				items.add(i.toDTO());
+			}
 		}
 		return items;
 	}
