@@ -51,7 +51,7 @@ public class ItemController {
 	
 	@GetMapping("/donations/top10")
 	public ResponseEntity<List<ItemDTO>> getItemsTopTen() {
-		return new ResponseEntity<>(itemServ.topTenDonation(), HttpStatus.OK);
+		return new ResponseEntity<>(itemServ.topTenDonation(ItemType.DOACAO), HttpStatus.OK);
 	}
 
 	@PostMapping("/required")
@@ -73,5 +73,10 @@ public class ItemController {
 	@GetMapping("/required/descriptor")
 	public ResponseEntity<List<ItemDTO>> getItemRequiredByDescriptor(@RequestParam Long id) {
 		return new ResponseEntity<>(itemServ.getItemsByDescriptor(ItemType.NECESSARIO, id), HttpStatus.OK);
+	}
+
+	@GetMapping("/required/top10")
+	public ResponseEntity<List<ItemDTO>> getItemsTopTenRequired() {
+		return new ResponseEntity<>(itemServ.topTenDonation(ItemType.NECESSARIO), HttpStatus.OK);
 	}
 }
