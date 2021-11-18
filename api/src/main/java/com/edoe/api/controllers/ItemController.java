@@ -48,4 +48,9 @@ public class ItemController {
 	public ResponseEntity<List<ItemDTO>> searchItem(@RequestParam String search) {
 		return new ResponseEntity<>(itemServ.searchItems(ItemType.DOACAO, search), HttpStatus.OK);
 	}
+	
+	@GetMapping("/donations/top10")
+	public ResponseEntity<List<ItemDTO>> getItemsTopTen() {
+		return new ResponseEntity<>(itemServ.topTenDonation(), HttpStatus.OK);
+	}
 }

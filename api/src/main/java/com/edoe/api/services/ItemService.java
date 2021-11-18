@@ -15,9 +15,7 @@ import com.edoe.api.models.Item;
 import com.edoe.api.repositories.ItemRepository;
 
 import javax.servlet.ServletException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ItemService {
@@ -108,7 +106,7 @@ public class ItemService {
 		Descriptor d = descriptorService.findDescriptorById(id);
 		List<ItemDTO> items = new ArrayList<>();
 		for(Item i: itemRepo.findAll()) {
-			if(i.getType().equals(ItemType.DOACAO) && i.getDescriptor().getDescriptor().equals(d.getDescriptor())) {
+			if (i.getType().equals(ItemType.DOACAO) && i.getDescriptor().getDescriptor().equals(d.getDescriptor())) {
 				items.add(i.toDTO());
 			}
 		}
@@ -121,6 +119,18 @@ public class ItemService {
 			if(i.getDescriptor().getDescriptor().toLowerCase().contains(term.toLowerCase())){
 				items.add(i.toDTO());
 			}
+		}
+		return items;
+	}
+
+	public List<ItemDTO> topTenDonation() {
+		List<ItemDTO> items = new ArrayList<>();
+		for(Item i: itemRepo.findAll()){
+			if(i.getType().equals(ItemType.DOACAO)) items.add(i.toDTO());
+		}
+		Collections.sort(items);
+		if(items.size() > 10) {
+			items = items.subList(0,10);
 		}
 		return items;
 	}
