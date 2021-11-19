@@ -16,13 +16,18 @@
  - [H2 Database](#https://mvnrepository.com/artifact/com.h2database/h2)
  - Swagger
 
-<h3 id="features">✅ Features</h3>
+<h3 id="features">✅ Casos de Uso</h3>
 
- - [x] Cadastro de usuário
- - [x] Definir papéis de usuários
- - [x] Alterar papéis de usuários
- - [x] Login de usuário
- - [ ] CRUD de itens
+ - [x] US 1 - Cadastro de usuários
+ - [x] US 2 - Configurar papéis de usuários
+ - [x] US 3 - Autenticar usuários no sistema
+ - [x] US 4 - Cadastro de itens a serem doados
+ - [x] US 5 - Gerar listagens dos itens a serem doados
+ - [x] US 6 - Cadastro de itens necessários
+ - [x] US 7 - Gerar listagens dos itens necessários
+ - [x] US 8 - Identificar possíveis matches  de itens para doação e itens necessários
+ - [ ] US 9 - Realizar doações e manter o histórico de doações
+ - [ ] US 10 - Listar doações realizadas
  
 <h3 id="status">✅ Status do Projeto</h3>
 <h5 align="center">🚧 Em construção 🚧</h5>
