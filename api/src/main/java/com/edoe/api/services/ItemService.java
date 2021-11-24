@@ -85,6 +85,10 @@ public class ItemService {
 		itemRepo.delete(item.get());
 	}
 
+	public void removeItemWithoutToken(Item i) {
+		itemRepo.delete(i);
+	}
+
 	public Item getItemById(Long id) {
 		Optional<Item> item = itemRepo.findById(id);
 		if(!item.isPresent()) {

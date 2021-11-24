@@ -29,8 +29,12 @@ public class UserService {
 
     @PostConstruct
     private void init() {
-        User admin = new User("admin@dcx.ufpb.br","Admin","83652134850",Role.ADMIN,"admin","7445992130", null);
+        User admin = new User("admin","Admin","83652134850",Role.ADMIN,"admin","7445992130", null);
+        User donator = new User("donator", "Donator","83652134850", Role.APENAS_DOADOR, "123","7445992137", null);
+        User receptor = new User("receptor", "Receptor","83652134850", Role.APENAS_RECEPTOR, "123","7445992134",null);
         userRepository.save(admin);
+        userRepository.save(receptor);
+        userRepository.save(donator);
     }
 
     public User createUser(User newUser) throws BadRequestException {
