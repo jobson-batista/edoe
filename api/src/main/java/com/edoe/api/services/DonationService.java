@@ -1,5 +1,6 @@
 package com.edoe.api.services;
 
+import com.edoe.api.dto.DonationWithoutReceptorDTO;
 import com.edoe.api.dto.ItemDTO;
 import com.edoe.api.enums.Role;
 import com.edoe.api.exceptions.BadRequestException;
@@ -10,7 +11,10 @@ import com.edoe.api.repositories.DonationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.servlet.ServletException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 
 @Service

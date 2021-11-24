@@ -1,6 +1,7 @@
 package com.edoe.api.controllers;
 
 import com.edoe.api.dto.DonationDTO;
+import com.edoe.api.dto.DonationWithoutReceptorDTO;
 import com.edoe.api.services.DonationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/donations")
