@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b53a1d0e-bacb-4e7a-a408-26f57e2895b0" name="Changes" comment="" />
+    <list default="true" id="b53a1d0e-bacb-4e7a-a408-26f57e2895b0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/com/edoe/api/dto/DonationWithoutReceptorDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/edoe/api/controllers/DonationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/edoe/api/controllers/DonationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/edoe/api/services/DonationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/edoe/api/services/DonationService.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,5 +35,16 @@
       <updated>1637079839118</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

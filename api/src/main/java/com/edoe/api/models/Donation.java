@@ -1,6 +1,7 @@
 package com.edoe.api.models;
 
 import com.edoe.api.dto.DonationDTO;
+import com.edoe.api.dto.DonationWithoutReceptorDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -52,4 +53,13 @@ public class Donation {
         return donationDTO;
     }
 
+    public DonationWithoutReceptorDTO toDTOWithoutReceptor() {
+        DonationWithoutReceptorDTO dto = new DonationWithoutReceptorDTO();
+        dto.setId(this.id);
+        dto.setDate(this.date);
+        dto.setUserDonator(this.userDonator.toDTO());
+        dto.setDescription(this.descriptrionItem);
+        dto.setQuantity(this.quantity);
+        return dto;
+    }
 }
