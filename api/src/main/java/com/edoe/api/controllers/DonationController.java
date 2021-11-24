@@ -20,4 +20,9 @@ public class DonationController {
     public ResponseEntity<DonationDTO> donate(@RequestParam Long idItemRequired, @RequestParam Long idItemDonation, @RequestParam int quantity, @RequestHeader("Authorization") String token) throws ServletException {
         return new ResponseEntity(donationService.donate(token, idItemRequired,idItemDonation,quantity).toDTO(), HttpStatus.OK);
     }
+
+    @GetMapping("/history")
+    public ResponseEntity<List<DonationWithoutReceptorDTO>> findAllDonationsWithoutReceptor() {
+        return new ResponseEntity(donationService.findAllDonationsWithoutReceptor(), HttpStatus.OK);
+    }
 }

@@ -42,4 +42,13 @@ public class DonationService {
         Donation donation = new Donation(new Date(), itemRequired.getUser(), itemDonation.getUser(), itemDonation.getDescription(), quantity);
         return donationRepository.save(donation);
     }
+
+    public List<DonationWithoutReceptorDTO> findAllDonationsWithoutReceptor() {
+        List<DonationWithoutReceptorDTO> donations = new ArrayList<>();
+        for(Donation d: donationRepository.findAll()) {
+            donations.add(d.toDTOWithoutReceptor());
+        }
+        Collections.sort(donations);
+        return donations;
+    }
 }
