@@ -26,8 +26,8 @@
  - [x] US 6 - Cadastro de itens necessários
  - [x] US 7 - Gerar listagens dos itens necessários
  - [x] US 8 - Identificar possíveis matches  de itens para doação e itens necessários
- - [ ] US 9 - Realizar doações e manter o histórico de doações
- - [ ] US 10 - Listar doações realizadas
+ - [x] US 9 - Realizar doações e manter o histórico de doações
+ - [x] US 10 - Listar doações realizadas
  
  <h3 id="features">✅ Requisitos não funcionais</h3>
  
