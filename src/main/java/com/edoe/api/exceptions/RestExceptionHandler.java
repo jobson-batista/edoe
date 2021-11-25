@@ -16,7 +16,7 @@ import java.util.Date;
 @RestControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @Value("${app.url.base.dev}")
+    @Value("${app.url.base}")
     private String urlBaseLocal;
 
     @ExceptionHandler(Exception.class)
