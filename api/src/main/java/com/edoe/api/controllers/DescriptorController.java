@@ -19,7 +19,7 @@ public class DescriptorController {
 
     @PostMapping
     public ResponseEntity<Descriptor> createDescriptor(@RequestBody Descriptor descriptor, @RequestHeader("Authorization") String header) throws ServletException {
-        return new ResponseEntity<Descriptor>(descriptorService.createDescriptor(descriptor, header), HttpStatus.OK);
+        return new ResponseEntity<Descriptor>(descriptorService.createDescriptor(descriptor, header), HttpStatus.CREATED);
     }
 
     @GetMapping

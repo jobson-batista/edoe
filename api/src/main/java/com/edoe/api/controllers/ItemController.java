@@ -20,7 +20,7 @@ public class ItemController {
 	
 	@PostMapping("/donations")
 	public ResponseEntity<ItemDTO> createItemDonation(@RequestBody Item item, @RequestHeader("Authorization") String token) throws ServletException {
-		return new ResponseEntity <>(itemServ.createItem(ItemType.DOACAO, item, token).toDTO(), HttpStatus.OK);
+		return new ResponseEntity <>(itemServ.createItem(ItemType.DOACAO, item, token).toDTO(), HttpStatus.CREATED);
 	}
 
 	@PatchMapping("/donations/{id}")
@@ -56,7 +56,7 @@ public class ItemController {
 
 	@PostMapping("/required")
 	public ResponseEntity<ItemDTO> createItemRequired(@RequestBody Item item, @RequestHeader("Authorization") String token) throws ServletException {
-		return new ResponseEntity <>(itemServ.createItem(ItemType.NECESSARIO, item, token).toDTO(), HttpStatus.OK);
+		return new ResponseEntity <>(itemServ.createItem(ItemType.NECESSARIO, item, token).toDTO(), HttpStatus.CREATED);
 	}
 
 	@PatchMapping("/required/{id}")
