@@ -1,9 +1,9 @@
 # eDoe API
-## API REST para o gerenciamento de doações para universitários no Campus IV da UFPB.
+## Sobre a API
+### API REST para o gerenciamento de doações para universitários no Campus IV da UFPB.
 
 # 🔰 Tabela de conteúdo
 * [Tecnologias envolvidas](#tec-env)
-* [Instalação](#inst)
 * [Executar o projeto](#exec)
 * [Status do Projeto](#status)
 * [Documentação da API](#doc)
@@ -14,7 +14,8 @@
  - [Java 11](#https://www.oracle.com/br/java/technologies/javase/jdk11-archive-downloads.html)
  - [Spring Boot 2.5.6](#https://spring.io/projects/spring-boot)
  - [H2 Database](#https://mvnrepository.com/artifact/com.h2database/h2)
- - Swagger
+ - Swagger 3.0
+ - Maven 
 
 <h3 id="features">✅ Casos de Uso</h3>
 
@@ -37,13 +38,16 @@
   - [x] Autenticação/autorização via JWT - JSON Web Token. O período de validade de um token deve ser definido pelo grupo e justificado no README.md.
   - [x] Manter repositório privado no github para backend . Os repositórios devem ser compartilhados com a professora (raquelvl).
   - [x] Os repositórios devem ser privados e compartilhados exclusivamente com os membros do grupo (além da professora). O grupo será penalizado se houver compartilhamento irregular em qualquer momento do desenvolvimento.
-  - [ ] Um readme.md no repositório do backend explicando sucintamente a API e informando os seguintes links: documentação swagger da API em operação e link para o backend implantado em operação (opcional).
+  - [x] Um readme.md no repositório do backend explicando sucintamente a API e informando os seguintes links: documentação swagger da API em operação e link para o backend implantado em operação (opcional).
   - [ ] Para quem implantar no heroku: a aplicação operacional já deve ter algumas campanhas e usuários criados previamente. No readme.md do repositório devem ser informadas as credenciais de pelo menos um usuário fictício já criado.
  
 <h3 id="status">✅ Status do Projeto</h3>
 <h5 align="center">🚧 Em construção 🚧</h5>
-<h3 id="inst">⚙️ Instalação</h3>
 <h3 id="exec">✅ Execução do projeto</h3>
-<h3 id="doc">📖 Documentação da API</h3>
 
+- Para executar o proejto basta entrar no diretório **api/** e rodar o comando **mvn spring-boot:run**.
+- Obs.: É necessário ter o Maven instalado no SO.
+
+<h3 id="doc">📖 Documentação da API</h3>
+<p align="center">http://localhost:8080/v1/api/swagger-ui/ (Localmente)</p>
 <h3 id="demo">🎬 Demonstração em vídeo</h3>
