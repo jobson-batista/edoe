@@ -8,6 +8,7 @@
 * [Status do Projeto](#status)
 * [Documentação da API](#doc)
 * [Demonstração em vídeo](#demo)
+* [Coleção JSON Insonmia](#json)
 
 <h3 id="tec-env">⚡ Tecnologias envolvidas</h3>
 
@@ -51,3 +52,4 @@
 <h3 id="doc">📖 Documentação da API</h3>
 <p align="center">http://localhost:8080/v1/api/swagger-ui/ (Localmente)</p>
 <h3 id="demo">🎬 Demonstração em vídeo</h3>
+<h3 id="json">Download da coleção de json do Insonmia: https://github.com/jobson-batista/edoe/files/7622090/Insomnia_2021-11-29.zip)</h3>
