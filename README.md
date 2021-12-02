@@ -53,5 +53,5 @@
 <p align="center">http://localhost:8080/v1/api/swagger-ui/ (Localmente)</p>
 <h3 id="demo">🎬 Demonstração em vídeo</h3>
 <h6>Vídeo curto (~ 3 min): https://youtu.be/9dSCThgUC64</h6>
-<h6>Vídeo longo (mais detalhado por caso de uso):https://youtu.be/H8RKFltb9ik </h6>
+<h6>Vídeo longo (mais detalhado por caso de uso): https://youtu.be/hu9gewj9d4k</h6>
 <h5 id="json">Download da coleção de json do Insonmia: https://github.com/jobson-batista/edoe/files/7622090/Insomnia_2021-11-29.zip</h5>
